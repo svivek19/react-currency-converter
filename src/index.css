@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    background: url('https://www.gregoryalexander.com/blog/images/parallax/galaxie/background/abstractWaves980.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
