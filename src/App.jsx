@@ -7,6 +7,7 @@ const App = () => {
   const [fromCurrency, setFromCurrency] = useState("USD");
   const [toCurrency, setToCurrency] = useState("INR");
   const [convertedAmount, setConvertedAmount] = useState(null);
+  const [exchangeRate, setExchangeRate] = useState(null);
 
   useEffect(() => {
     const getExchangeRate = async () => {
@@ -15,25 +16,32 @@ const App = () => {
 
         const res = await axios.get(url);
 
-        console.log(res);
+        setExchangeRate(res.data.rates[toCurrency]);
 
       } catch (err) {
         console.log(err);
       }
     };
-  });
+    getExchangeRate()
+  }, [fromCurrency, toCurrency]);
+
+  useEffect(()=>{
+    if(exchangeRate !== null){
+      setConvertedAmount((amount*exchangeRate).toFixed(2))
+    }
+  },[amount,exchangeRate])
 
   const handleAmountChange = (e) => {
     const value = parseFloat(e.target.value);
     setAmount(isNaN(value) ? 0 : value);
   }
 
-  const handleFromCurrencyChange = () => {
-
+  const handleFromCurrencyChange = (e) => {
+    setFromCurrency(e.target.value)
   }
 
-  const handleToCurrencyChange = () => {
-
+  const handleToCurrencyChange = (e) => {
+    setToCurrency(e.target.value)
   }
 
   return (
