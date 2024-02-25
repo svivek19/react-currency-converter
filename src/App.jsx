@@ -32,9 +32,15 @@ const App = () => {
   },[amount,exchangeRate])
 
   const handleAmountChange = (e) => {
-    const value = parseFloat(e.target.value);
-    setAmount(isNaN(value) ? 0 : value);
-  }
+    let newValue = e.target.value;
+
+    newValue = newValue.replace(/^0+/, '');
+
+    const value = parseFloat(newValue);
+
+    setAmount(isNaN(value) ? '' : value);
+}
+
 
   const handleFromCurrencyChange = (e) => {
     setFromCurrency(e.target.value)
@@ -53,7 +59,7 @@ const App = () => {
         <h1 className="text-3xl md:text-4xl text-violet-100 text-center border-dashed border-t-2 border-b-2 border-purple-400 font-bold mb-4">Currency Converter</h1>
         <div className="mb-4">
           <label htmlFor="amount" className='font-semibold text-violet-100'>Amount: </label>
-          <input type="number" id="amount" className="block w-full font-semibold p-2 border border-gray-300 rounded-md focus:ring-violet-700 outline-none bg-violet-300 focus:border-violet-700" value={amount} onChange={handleAmountChange} />
+          <input type="number" id="amount" className="block w-full font-semibold p-2 border border-gray-300 rounded-md focus:ring-violet-700 outline-none bg-violet-300 focus:border-violet-700" min={0} value={amount} onChange={handleAmountChange} />
         </div>
         <div className="mb-4">
           <label htmlFor="fromCurrency" className='font-semibold text-violet-100'>From Currency: </label>
